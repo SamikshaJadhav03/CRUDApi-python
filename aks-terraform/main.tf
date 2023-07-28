@@ -8,7 +8,7 @@ data "azurerm_resource_group" "aks" {
 
 resource "azurerm_kubernetes_cluster" "aks" {
   name                = "my-aks-cluster"
-  location            = azurerm_resource_group.aks.location
+  location            = data.azurerm_resource_group.aks.location
   resource_group_name = data.azurerm_resource_group.aks.name
   dns_prefix          = "myakscluster"
   kubernetes_version  = "1.21.0"
