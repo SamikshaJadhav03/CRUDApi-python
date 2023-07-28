@@ -40,5 +40,5 @@ jobs:
 
       - name: Deploy to AKS
         run: |
-          az aks get-credentials --resource-group my-aks-resource-group --name my-aks-cluster
+          az aks get-credentials --resource-group api-demo --name my-aks-cluster
           kubectl apply -f kubernetes/deployment.yml
