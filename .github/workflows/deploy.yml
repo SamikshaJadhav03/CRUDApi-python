@@ -41,8 +41,9 @@ jobs:
       - name: 'Terraform Init'
         # uses: hashicorp/terraform-github-actions@master
         run: |
-          terraform init
           echo "${{ github.workspace }}"
+        
+        
         # with:
         #   tf_actions_version: 0.14.8
         #   tf_actions_subcommand: 'plan'
