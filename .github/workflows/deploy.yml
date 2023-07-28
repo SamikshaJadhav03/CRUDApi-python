@@ -45,6 +45,12 @@ jobs:
       #     tf_actions_subcommand: 'fmt'
       #     tf_actions_working_dir: "./terraform"
 
+  terraform:
+    name: 'Terraform'
+    uses: azure/login@v1
+    with:
+      creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: 'Terraform Init'
         uses: hashicorp/terraform-github-actions@master
         with:
