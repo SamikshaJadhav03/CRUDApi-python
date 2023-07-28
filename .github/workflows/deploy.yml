@@ -56,12 +56,13 @@ jobs:
         #   tf_actions_subcommand: 'plan'
         #   tf_actions_working_dir: "${{ github.workspace }}/aks-terraform"
 
-      # - name: 'Terraform Plan'
-      #   run: terraform plan
-      #   with:
-      #     tf_actions_version: 0.14.8
-      #     tf_actions_subcommand: 'plan'
-      #     tf_actions_working_dir: "./terraform"
+      - name: 'Terraform Plan'
+        working-directory: "${{ github.workspace }}/aks-terraform"
+        run: terraform plan
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        working-directory: "${{ github.workspace }}/aks-terraform"
 
       # - name: Deploy to AKS
       #   run: |
