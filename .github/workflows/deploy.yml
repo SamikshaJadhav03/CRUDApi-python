@@ -22,10 +22,10 @@ jobs:
         run: docker build -t my-api-image .
 
       - name: Tag Docker image
-        run: docker tag my-api-image myacr.azurecr.io/my-api-image:${{ github.sha }}
+        run: docker tag my-api-image terraformrg.azurecr.io/my-api-image:${{ github.sha }}
 
       - name: Push Docker image to Azure Container Registry
-        run: docker push myacr.azurecr.io/my-api-image:${{ github.sha }}
+        run: docker push terraformrg.azurecr.io/my-api-image:${{ github.sha }}
 
       - name: Install Azure CLI
         run: |
