@@ -16,7 +16,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   default_node_pool {
     name                = "default"
     node_count          = 2
-    vm_size             = "Standard_D2_v2"
+    vm_size             = "Standard_B1s"
     vnet_subnet_id      = "/subscriptions/e7309d26-3161-4734-8495-0967e305fe8e/resourceGroups/api-demo/providers/Microsoft.Network/virtualNetworks/aks-vnet/subnets/aks-subnet"  
     enable_auto_scaling = false  # Optional: set to true for auto-scaling
   }
