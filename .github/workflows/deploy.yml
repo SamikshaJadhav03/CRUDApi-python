@@ -40,22 +40,19 @@ jobs:
       
       - name: 'Terraform Init'
         # uses: hashicorp/terraform-github-actions@master
-        run: |
-          echo "${{ github.workspace }}"
-        
-        
-        # with:
-        #   tf_actions_version: 0.14.8
-        #   tf_actions_subcommand: 'plan'
-        #   tf_actions_working_dir: "${{ github.workspace }}/aks-terraform"
+        run: terraform init
+        with:
+          tf_actions_version: 0.14.8
+          tf_actions_subcommand: 'plan'
+          tf_actions_working_dir: "${{ github.workspace }}/aks-terraform"
 
-      # - name: 'Terraform Validate'
-      #   # uses: hashicorp/terraform-github-actions@master
-      #   run: terraform validate
-      #   with:
-      #     tf_actions_version: 0.14.8
-      #     tf_actions_subcommand: 'plan'
-      #     tf_actions_working_dir: "${{ github.workspace }}/aks-terraform"
+      - name: 'Terraform Validate'
+        # uses: hashicorp/terraform-github-actions@master
+        run: terraform validate
+        with:
+          tf_actions_version: 0.14.8
+          tf_actions_subcommand: 'plan'
+          tf_actions_working_dir: "${{ github.workspace }}/aks-terraform"
 
       # - name: 'Terraform Plan'
       #   run: terraform plan
