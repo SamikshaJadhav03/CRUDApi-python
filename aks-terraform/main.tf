@@ -22,6 +22,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
     enable_auto_scaling = false  # Optional: set to true for auto-scaling
   }
 
+  service_principal {
+      client_id = "9cc3775c-5935-466e-8769-df1d4bcb32d2"
+      client_secret = "QE18Q~JN.zLZXdjZOEy.SIS-CE6S2PkCa50GpaOe"
+      }
   tags = {
     environment = "dev"
   }
