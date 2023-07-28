@@ -1,0 +1,37 @@
+name: Deploy to AKS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Build Docker image
+        run: docker build -t my-api-image .
+
+      - name: Tag Docker image
+        run: docker tag my-api-image myacr.azurecr.io/my-api-image:${{ github.sha }}
+
+      - name: Push Docker image to Azure Container Registry
+        run: docker push myacr.azurecr.io/my-api-image:${{ github.sha }}
+
+      - name: Install Azure CLI
+        run: |
+          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+      - name: Deploy to AKS
+        run: |
+          az aks get-credentials --resource-group my-aks-resource-group --name my-aks-cluster
+          kubectl apply -f kubernetes/deployment.yml
