@@ -1,0 +1,9 @@
+image:
+  repository: myacr.azurecr.io/my-api-image
+  tag: latest
+
+service:
+  type: ClusterIP
+
+ingress:
+  enabled: false
