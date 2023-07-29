@@ -1,6 +1,6 @@
 variable "resource_group_name" {
   type        = string
-  default     = "eastus"
+  default     = "api-demo"
   description = "Name of resource group"
 }
 
