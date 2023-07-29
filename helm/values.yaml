@@ -8,3 +8,6 @@ service:
 
 ingress:
   enabled: false
+
+fullnameOverride: ""
+nameOverride: ""
