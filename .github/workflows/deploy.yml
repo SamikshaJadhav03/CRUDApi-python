@@ -37,22 +37,71 @@ jobs:
       - name: Install Azure CLI
         run: |
           curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-      
-      - name: 'Terraform Init'
-        working-directory: "${{ github.workspace }}/aks-terraform"
-        id: check_aks
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
         run: |
+          export ARM_CLIENT_ID=$ARM_CLIENT_ID
+          export ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
+          export ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID
+          export ARM_TENANT_ID=$ARM_TENANT_ID
+  
           terraform init
-          terraform validate
-          terraform plan
-          AKS_EXIST=$(az aks list --resource-group api-demo --query "length([])" -o tsv)
-          echo "AKS_EXIST=$AKS_EXIST" >> $GITHUB_ENV
-          
-      - name: Deploy AKS with Terraform
-        working-directory: "${{ github.workspace }}/aks-terraform"
-        if: env.AKS_EXIST == '0'
+        env:
+          ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
+          ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
+          ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
+          ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
+
+      - name: Terraform plan
         run: |
-          terraform apply --auto-approve
+          export ARM_CLIENT_ID=$ARM_CLIENT_ID
+          export ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
+          export ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID
+          export ARM_TENANT_ID=$ARM_TENANT_ID
+  
+          terraform plan -input=false -var service_principle_client_id=$aks_client_id -var service_principle_client_secret=$aks_client_secret
+        env:
+          ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
+          ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
+          ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
+          ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
+          aks_client_id: ${{secrets.AKS_CLIENT_ID}}
+          aks_client_secret: ${{secrets.AKS_CLIENT_SECRET}}
+
+      - name: Terraform Apply
+        run: |
+          export ARM_CLIENT_ID=$ARM_CLIENT_ID
+          export ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
+          export ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID
+          export ARM_TENANT_ID=$ARM_TENANT_ID
+  
+          terraform apply -auto-approve -input=false -var service_principle_client_id=$aks_client_id -var service_principle_client_secret=$aks_client_secret
+        env:
+            ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
+            ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
+            ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
+            ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
+            aks_client_id: ${{secrets.AKS_CLIENT_ID}}
+            aks_client_secret: ${{secrets.AKS_CLIENT_SECRET}}
+      
+      # - name: 'Terraform Init'
+      #   working-directory: "${{ github.workspace }}/aks-terraform"
+      #   id: check_aks
+      #   run: |
+      #     terraform init
+      #     terraform validate
+      #     terraform plan
+      #     AKS_EXIST=$(az aks list --resource-group api-demo --query "length([])" -o tsv)
+      #     echo "AKS_EXIST=$AKS_EXIST" >> $GITHUB_ENV
+          
+      # - name: Deploy AKS with Terraform
+      #   working-directory: "${{ github.workspace }}/aks-terraform"
+      #   if: env.AKS_EXIST == '0'
+      #   run: |
+      #     terraform apply --auto-approve
 
       - name: Azure AKS Set Context
         uses: azure/aks-set-context@v1
