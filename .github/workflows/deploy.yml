@@ -86,7 +86,7 @@ jobs:
         run: helm lint
 
       - name: Deploy to AKS
-        working-directory: "${{ github.workspace }}/helm"
+        working-directory: "${{ github.workspace }}"
         run: |
           az aks get-credentials --resource-group api-demo --name my-aks-cluster
           helm install helm --debug --dry-run --generate-name
