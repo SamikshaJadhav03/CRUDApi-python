@@ -42,6 +42,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
 
       - name: Terraform Init
+        working-directory: "${{ github.workspace }}/aks-terraform"
         run: |
           export ARM_CLIENT_ID=$ARM_CLIENT_ID
           export ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
@@ -56,6 +57,7 @@ jobs:
           ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
 
       - name: Terraform plan
+        working-directory: "${{ github.workspace }}/aks-terraform"
         run: |
           export ARM_CLIENT_ID=$ARM_CLIENT_ID
           export ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
@@ -72,6 +74,7 @@ jobs:
           aks_client_secret: ${{secrets.AKS_CLIENT_SECRET}}
 
       - name: Terraform Apply
+        working-directory: "${{ github.workspace }}/aks-terraform"
         run: |
           export ARM_CLIENT_ID=$ARM_CLIENT_ID
           export ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
