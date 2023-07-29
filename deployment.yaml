@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: crud-api-deployment9
+  name: crud-api-deployment
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: crud-api-9
+      app: crud-api
   template:
     metadata:
       labels:
-        app: crud-api-9
+        app: crud-api
     spec:
       containers:
         - name: crud-api-container
-          image: terraformrg.azurecr.io/my-api-image:v2
+          image: terraformrg.azurecr.io/my-api-image:v3
           ports:
             - containerPort: 5000

@@ -45,7 +45,7 @@ class BookListResource(Resource):
         books.append(new_book)
         return new_book, 201
 
-api.add_resource(BookListResource, '/books')
+api.add_resource(BookListResource, '/')
 api.add_resource(BookResource, '/books/<int:book_id>')
 
 if __name__ == '__main__':
