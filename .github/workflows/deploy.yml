@@ -25,53 +25,53 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      # - name: Build Docker image
-      #   run: docker build -t my-api-image .
+      - name: Build Docker image
+        run: docker build -t my-api-image .
 
-      # - name: Tag Docker image
-      #   run: docker tag my-api-image terraformrg.azurecr.io/my-api-image:${{ github.sha }}
+      - name: Tag Docker image
+        run: docker tag my-api-image terraformrg.azurecr.io/my-api-image:${{ github.sha }}
 
-      # - name: Push Docker image to Azure Container Registry
-      #   run: docker push terraformrg.azurecr.io/my-api-image:${{ github.sha }}
+      - name: Push Docker image to Azure Container Registry
+        run: docker push terraformrg.azurecr.io/my-api-image:${{ github.sha }}
 
-      # - name: Install Azure CLI
-      #   run: |
-      #     curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+      - name: Install Azure CLI
+        run: |
+          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
       
-      # - name: 'Terraform Init'
-      #   # uses: hashicorp/terraform-github-actions@master
-      #   working-directory: "${{ github.workspace }}/aks-terraform"
-      #   run: terraform init
-      #   # with:
-      #   #   tf_actions_version: 0.14.8
-      #   #   tf_actions_subcommand: 'plan'
-      #   #   tf_actions_working_dir: "${{ github.workspace }}/aks-terraform"
+      - name: 'Terraform Init'
+        # uses: hashicorp/terraform-github-actions@master
+        working-directory: "${{ github.workspace }}/aks-terraform"
+        run: terraform init
+        # with:
+        #   tf_actions_version: 0.14.8
+        #   tf_actions_subcommand: 'plan'
+        #   tf_actions_working_dir: "${{ github.workspace }}/aks-terraform"
 
-      # - name: 'Terraform Validate'
-      #   # uses: hashicorp/terraform-github-actions@master
-      #   working-directory: "${{ github.workspace }}/aks-terraform"
-      #   run: terraform validate
-      #   # with:
-      #   #   tf_actions_version: 0.14.8
-      #   #   tf_actions_subcommand: 'plan'
-      #   #   tf_actions_working_dir: "${{ github.workspace }}/aks-terraform"
+      - name: 'Terraform Validate'
+        # uses: hashicorp/terraform-github-actions@master
+        working-directory: "${{ github.workspace }}/aks-terraform"
+        run: terraform validate
+        # with:
+        #   tf_actions_version: 0.14.8
+        #   tf_actions_subcommand: 'plan'
+        #   tf_actions_working_dir: "${{ github.workspace }}/aks-terraform"
 
-      # - name: 'Terraform Plan'
-      #   working-directory: "${{ github.workspace }}/aks-terraform"
-      #   run: terraform plan
+      - name: 'Terraform Plan'
+        working-directory: "${{ github.workspace }}/aks-terraform"
+        run: terraform plan
 
-      # - name: Terraform Apply
-      #   working-directory: "${{ github.workspace }}/aks-terraform"
-      #   id: check_aks
-      #   run: |
-      #     AKS_EXIST=$(az aks list --resource-group api-demo --query "length([])" -o tsv)
-      #     echo "AKS_EXIST=$AKS_EXIST" >> $GITHUB_ENV
+      - name: Terraform Apply
+        working-directory: "${{ github.workspace }}/aks-terraform"
+        id: check_aks
+        run: |
+          AKS_EXIST=$(az aks list --resource-group api-demo --query "length([])" -o tsv)
+          echo "AKS_EXIST=$AKS_EXIST" >> $GITHUB_ENV
 
-      # - name: Deploy AKS with Terraform
-      #   working-directory: "${{ github.workspace }}/aks-terraform"
-      #   if: env.AKS_EXIST == '0'
-      #   run: |
-      #     terraform apply --auto-approve
+      - name: Deploy AKS with Terraform
+        working-directory: "${{ github.workspace }}/aks-terraform"
+        if: env.AKS_EXIST == '0'
+        run: |
+          terraform apply --auto-approve
       
       - name: Install Helm
         run: |

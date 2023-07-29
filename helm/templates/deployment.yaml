@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: crud-api-deployment1
+  name: crud-api-deployment2
 spec:
   replicas: 3
   selector:
@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: crud-api-container
-          image: terraformrg.azurecr.io/my-api-image:latest
+          image: terraformrg.azurecr.io/my-api-image:${{ github.sha }}
           ports:
             - containerPort: 5000
