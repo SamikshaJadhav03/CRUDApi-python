@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: crud-api-service8
+  name: crud-api-service9
 spec:
   selector:
-    app: crud-api-8
+    app: crud-api-9
   ports:
     - protocol: TCP
       port: 80
