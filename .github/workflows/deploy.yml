@@ -89,4 +89,4 @@ jobs:
         working-directory: "${{ github.workspace }}"
         run: |
           az aks get-credentials --resource-group api-demo --name my-aks-cluster
-          helm install helm --debug --dry-run --generate-name
+          helm install helm --generate-name
