@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: crud-api-deployment3
+  name: crud-api-deployment4
 spec:
   replicas: 3
   selector:
