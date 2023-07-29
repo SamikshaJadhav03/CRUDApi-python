@@ -44,10 +44,10 @@ jobs:
       - name: Terraform Init
         working-directory: "${{ github.workspace }}/aks-terraform"
         run: |
-          export ARM_CLIENT_ID=$ARM_CLIENT_ID
-          export ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
-          export ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID
-          export ARM_TENANT_ID=$ARM_TENANT_ID
+# export ARM_CLIENT_ID=$ARM_CLIENT_ID
+# export ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
+# export ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID
+# export ARM_TENANT_ID=$ARM_TENANT_ID
   
           terraform init
         env:
@@ -59,10 +59,10 @@ jobs:
       - name: Terraform plan
         working-directory: "${{ github.workspace }}/aks-terraform"
         run: |
-          export ARM_CLIENT_ID=$ARM_CLIENT_ID
-          export ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
-          export ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID
-          export ARM_TENANT_ID=$ARM_TENANT_ID
+# export ARM_CLIENT_ID=$ARM_CLIENT_ID
+# export ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
+# export ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID
+# export ARM_TENANT_ID=$ARM_TENANT_ID
   
           terraform plan -input=false -var service_principle_client_id=$aks_client_id -var service_principle_client_secret=$aks_client_secret
         env:
@@ -76,12 +76,12 @@ jobs:
       - name: Terraform Apply
         working-directory: "${{ github.workspace }}/aks-terraform"
         run: |
-          export ARM_CLIENT_ID=$ARM_CLIENT_ID
-          export ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
-          export ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID
-          export ARM_TENANT_ID=$ARM_TENANT_ID
+# export ARM_CLIENT_ID=$ARM_CLIENT_ID
+# export ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
+# export ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID
+# export ARM_TENANT_ID=$ARM_TENANT_ID
   
-          terraform apply -auto-approve -input=false -var service_principle_client_id=$aks_client_id -var service_principle_client_secret=$aks_client_secret
+           terraform apply -auto-approve -input=false -var service_principle_client_id=$aks_client_id -var service_principle_client_secret=$aks_client_secret
         env:
             ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
             ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
@@ -90,22 +90,6 @@ jobs:
             aks_client_id: ${{secrets.AKS_CLIENT_ID}}
             aks_client_secret: ${{secrets.AKS_CLIENT_SECRET}}
       
-      # - name: 'Terraform Init'
-      #   working-directory: "${{ github.workspace }}/aks-terraform"
-      #   id: check_aks
-      #   run: |
-      #     terraform init
-      #     terraform validate
-      #     terraform plan
-      #     AKS_EXIST=$(az aks list --resource-group api-demo --query "length([])" -o tsv)
-      #     echo "AKS_EXIST=$AKS_EXIST" >> $GITHUB_ENV
-          
-      # - name: Deploy AKS with Terraform
-      #   working-directory: "${{ github.workspace }}/aks-terraform"
-      #   if: env.AKS_EXIST == '0'
-      #   run: |
-      #     terraform apply --auto-approve
-
       - name: Azure AKS Set Context
         uses: azure/aks-set-context@v1
         with:
