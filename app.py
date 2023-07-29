@@ -9,36 +9,36 @@ data = [
     {"id": 3, "name": "John"}
 ]
 
-@app.route('/items', methods=['POST'])
-def create_item():
-    new_item = {"id": len(data) + 1, "name": request.json['name']}
-    data.append(new_item)
-    return jsonify(new_item), 201
+@app.route('/candidates', methods=['POST'])
+def create_candidates():
+    new_candidates = {"id": len(data) + 1, "name": request.json['name']}
+    data.append(new_candidates)
+    return jsonify(new_candidates), 201
 
-@app.route('/items', methods=['GET'])
-def get_items():
+@app.route('/candidates', methods=['GET'])
+def get_candidates():
     return jsonify(data), 200
 
-@app.route('/items/<int:item_id>', methods=['GET'])
-def get_item(item_id):
-    item = next((item for item in data if item['id'] == item_id), None)
-    if item:
-        return jsonify(item), 200
-    return jsonify({"message": "Item not found"}), 404
+@app.route('/candidates/<int:candidates_id>', methods=['GET'])
+def get_candidates(candidates_id):
+    candidates = next((candidates for candidates in data if candidates['id'] == candidates_id), None)
+    if candidates:
+        return jsonify(candidates), 200
+    return jsonify({"message": "candidates not found"}), 404
 
-@app.route('/items/<int:item_id>', methods=['PUT'])
-def update_item(item_id):
-    item = next((item for item in data if item['id'] == item_id), None)
-    if item:
-        item['name'] = request.json['name']
-        return jsonify(item), 200
-    return jsonify({"message": "Item not found"}), 404
+@app.route('/candidates/<int:candidates_id>', methods=['PUT'])
+def update_candidates(candidates_id):
+    candidates = next((candidates for candidates in data if candidates['id'] == candidates_id), None)
+    if candidates:
+        candidates['name'] = request.json['name']
+        return jsonify(candidates), 200
+    return jsonify({"message": "candidates not found"}), 404
 
-@app.route('/items/<int:item_id>', methods=['DELETE'])
-def delete_item(item_id):
+@app.route('/candidates/<int:candidates_id>', methods=['DELETE'])
+def delete_candidates(candidates_id):
     global data
-    data = [item for item in data if item['id'] != item_id]
-    return jsonify({"message": "Item deleted successfully"}), 200
+    data = [candidates for candidates in data if candidates['id'] != candidates_id]
+    return jsonify({"message": "candidates deleted successfully"}), 200
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
