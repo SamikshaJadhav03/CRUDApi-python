@@ -40,22 +40,28 @@ jobs:
       
       - name: 'Terraform Init'
         working-directory: "${{ github.workspace }}/aks-terraform"
-        run: terraform init
-
-      - name: 'Terraform Validate'
-        working-directory: "${{ github.workspace }}/aks-terraform"
-        run: terraform validate
-
-      - name: 'Terraform Plan'
-        working-directory: "${{ github.workspace }}/aks-terraform"
-        run: terraform plan
-
-      - name: Terraform Apply
-        working-directory: "${{ github.workspace }}/aks-terraform"
         id: check_aks
         run: |
+          terraform init
+          terraform validate
+          terraform plan
           AKS_EXIST=$(az aks list --resource-group api-demo --query "length([])" -o tsv)
           echo "AKS_EXIST=$AKS_EXIST" >> $GITHUB_ENV
+          
+      # - name: 'Terraform Validate'
+      #   working-directory: "${{ github.workspace }}/aks-terraform"
+      #   run: terraform validate
+
+      # - name: 'Terraform Plan'
+      #   working-directory: "${{ github.workspace }}/aks-terraform"
+      #   run: terraform plan
+
+      # - name: Terraform Apply
+      #   working-directory: "${{ github.workspace }}/aks-terraform"
+      #   id: check_aks
+      #   run: |
+      #     AKS_EXIST=$(az aks list --resource-group api-demo --query "length([])" -o tsv)
+      #     echo "AKS_EXIST=$AKS_EXIST" >> $GITHUB_ENV
 
       - name: Deploy AKS with Terraform
         working-directory: "${{ github.workspace }}/aks-terraform"
@@ -78,13 +84,15 @@ jobs:
           helm repo add stable https://charts.helm.sh/stable
           helm repo update
 
-      - name: Helm Lint
-        working-directory: "${{ github.workspace }}/helm"
-        run: helm lint
+      # - name: Helm Lint
+      #   working-directory: "${{ github.workspace }}/helm"
+      #   run: helm lint
 
       - name: Deploy to AKS
         working-directory: "${{ github.workspace }}"
         run: |
-          helm repo add stable https://charts.helm.sh/stable
-          helm repo update
-          helm install my-crud-api ./helm 
+          helm lint
+          helm install my-crud-api-new ./helm 
+
+# helm repo add stable https://charts.helm.sh/stable
+# helm repo update
