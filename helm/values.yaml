@@ -1,6 +1,7 @@
 # values.yaml
 image:
-  repository: terraformrg.azurecr.io/my-api-image:v6
+  repository: terraformrg.azurecr.io/my-api-image
+  tag: v6
   pullPolicy: IfNotPresent
 
 replicas: 3
