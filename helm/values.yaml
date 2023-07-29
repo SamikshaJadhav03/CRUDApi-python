@@ -4,6 +4,3 @@ image:
 
 service:
   type: LoadBalancer
-
-ingress:
-  enabled: false
