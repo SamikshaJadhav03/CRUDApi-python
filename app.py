@@ -4,9 +4,9 @@ app = Flask(__name__)
 
 # Sample data for demonstration (replace this with your data storage or database)
 data = [
-    {"id": 1, "name": "Item 1"},
-    {"id": 2, "name": "Item 2"},
-    {"id": 3, "name": "Item 3"}
+    {"id": 1, "name": "Sam"},
+    {"id": 2, "name": "Tom"},
+    {"id": 3, "name": "John"}
 ]
 
 @app.route('/items', methods=['POST'])
