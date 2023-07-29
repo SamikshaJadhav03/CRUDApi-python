@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: crud-api-ingress
+spec:
+  rules:
+    -  http:
+        paths:
+          - path: /books
+            pathType: Prefix
+            backend:
+              service:
+                name: crud-api-service5
+                port:
+                  number: 80
