@@ -92,7 +92,7 @@ jobs:
         working-directory: "${{ github.workspace }}"
         run: |
           helm lint ./helm
-          helm install my-crud-api-new ./helm 
+          helm install my-crud-api-1 ./helm 
 
 # helm repo add stable https://charts.helm.sh/stable
 # helm repo update
