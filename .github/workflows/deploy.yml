@@ -97,10 +97,10 @@ jobs:
         run: |
           helm repo add stable https://charts.helm.sh/stable
           helm repo update
-          helm package helm
-          helm upgrade --install flask-crud-api flask-crud-api-0.1.0.tgz
+          helm install flask-crud-api ./helm 
 
-
+  # helm package helm
+  # helm upgrade --install flask-crud-api flask-crud-api-0.1.0.tgz
   # az aks get-credentials --resource-group api-demo --name my-aks-cluster
   # kubectl apply -f deployment.yaml
   # kubectl apply -f service.yaml
