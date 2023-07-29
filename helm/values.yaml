@@ -1,6 +1,6 @@
 # values.yaml
 image:
-  repository: myacr.azurecr.io/my-api-image
+  repository: terraformrg.azurecr.io/my-api-image
   tag: v5
   pullPolicy: IfNotPresent
 
