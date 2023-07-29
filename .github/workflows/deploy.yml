@@ -88,8 +88,8 @@ jobs:
       - name: Deploy to AKS
         working-directory: "${{ github.workspace }}"
         run: |
-          helm package flask-crud-api-chart
-          helm install flask-crud-api flask-crud-api-chart-0.1.0.tgz
+          helm package flask-crud-api
+          helm install flask-crud-api flask-crud-api-0.1.0.tgz
 
 
   # az aks get-credentials --resource-group api-demo --name my-aks-cluster
