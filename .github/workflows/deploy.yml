@@ -73,4 +73,4 @@ jobs:
         working-directory: "${{ github.workspace }}"
         run: |
           helm lint ./helm
-          helm install my-crud-api-2 ./helm 
+          helm install my-crud-api-3 ./helm 
