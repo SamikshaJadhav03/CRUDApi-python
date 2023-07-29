@@ -72,7 +72,14 @@ jobs:
         if: env.AKS_EXIST == '0'
         run: |
           terraform apply --auto-approve
-      
+
+      - name: Azure AKS Set Context
+        uses: azure/aks-set-context@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          cluster-name: my-aks-cluster
+          resource-group: api-demo
+
       - name: Install Helm
         run: |
           curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
@@ -88,8 +95,10 @@ jobs:
       - name: Deploy to AKS
         working-directory: "${{ github.workspace }}"
         run: |
+          helm repo add stable https://charts.helm.sh/stable
+          helm repo update
           helm package helm
-          helm install flask-crud-api flask-crud-api-0.1.0.tgz
+          helm upgrade --install flask-crud-api flask-crud-api-0.1.0.tgz
 
 
   # az aks get-credentials --resource-group api-demo --name my-aks-cluster
