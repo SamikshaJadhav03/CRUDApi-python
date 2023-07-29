@@ -35,7 +35,7 @@ variable "node_count" {
 }
 
 variable "subnet_id" {
-  type        = number
+  type        = string
   default     = "/subscriptions/e7309d26-3161-4734-8495-0967e305fe8e/resourceGroups/api-demo/providers/Microsoft.Network/virtualNetworks/aks-vnet/subnets/aks-subnet"
   description = "Subnet ID for the cluster"
 }
