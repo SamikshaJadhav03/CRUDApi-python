@@ -1,6 +1,7 @@
 image:
   repository: myacr.azurecr.io/my-api-image
-  tag: latest
+  tag: v5
+  pullPolicy: IfNotPresent
 
 service:
   type: LoadBalancer

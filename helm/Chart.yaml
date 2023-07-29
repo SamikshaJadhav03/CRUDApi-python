@@ -1,6 +1,6 @@
 apiVersion: v2
-name: helm
-description: A Helm chart for Kubernetes
+name: flask-crud-api
+description: A Helm chart to deploy Flask CRUD API
 
 # A chart can be either an 'application' or a 'library' chart.
 #
