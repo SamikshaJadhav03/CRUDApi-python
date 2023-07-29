@@ -61,9 +61,17 @@ jobs:
         run: terraform plan
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main'
         working-directory: "${{ github.workspace }}/aks-terraform"
-        run: terraform apply --auto-approve
+        id: check_aks
+        run: |
+          AKS_EXIST=$(az aks list --resource-group api-demo --query "length([])" -o tsv)
+          echo "AKS_EXIST=$AKS_EXIST" >> $GITHUB_ENV
+
+      - name: Deploy AKS with Terraform
+        working-directory: "${{ github.workspace }}/aks-terraform"
+        if: env.AKS_EXIST == '0'
+        run: |
+          terraform apply --auto-approve
       
       - name: Install Helm
         run: |
