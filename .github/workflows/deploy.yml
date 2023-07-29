@@ -91,4 +91,4 @@ jobs:
           az aks get-credentials --resource-group api-demo --name my-aks-cluster
           kubectl apply -f deployment.yaml
           kubectl apply -f service.yaml
-          kubectl apply -f ingree.yaml
+          kubectl apply -f ingress.yaml

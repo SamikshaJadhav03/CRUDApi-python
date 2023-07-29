@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: crud-api-deployment6
+  name: crud-api-deployment7
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: crud-api-6
+      app: crud-api-7
   template:
     metadata:
       labels:
-        app: crud-api-6
+        app: crud-api-7
     spec:
       containers:
         - name: crud-api-container
