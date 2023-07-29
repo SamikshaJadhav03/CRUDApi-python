@@ -125,4 +125,4 @@ jobs:
         working-directory: "${{ github.workspace }}"
         run: |
           helm lint ./helm
-          helm install my-crud-api-3 ./helm --atomic --skip-crds
+          helm upgrade --install my-crud-api-3 ./helm
