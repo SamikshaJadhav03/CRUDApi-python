@@ -4,7 +4,7 @@ metadata:
   name: crud-api-ingress
 spec:
   rules:
-    - host: crud-api.example.com  # Replace with your actual domain name
+    - host: 52.177.24.227  # Replace with your actual domain name
       http:
         paths:
           - path: /
