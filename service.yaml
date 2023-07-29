@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: crud-api-service7
+  name: crud-api-service8
 spec:
   selector:
-    app: crud-api-7
+    app: crud-api-8
   ports:
     - protocol: TCP
       port: 5000
       targetPort: 5000
-  type: ClusterIP
+  type: LoadBalancer
