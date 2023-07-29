@@ -1,13 +1,13 @@
+# values.yaml
 image:
   repository: myacr.azurecr.io/my-api-image
   tag: v5
   pullPolicy: IfNotPresent
 
+replicas: 3
+
 service:
   type: LoadBalancer
-
-ingress:
-  enabled: false
 
 fullnameOverride: ""
 nameOverride: ""

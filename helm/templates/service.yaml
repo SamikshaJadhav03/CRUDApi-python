@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "flask-crud-api.fullname" . }}
+  name: {{ .Chart.Name }}
   labels:
-    app: {{ include "flask-crud-api.name" . }}
+    app: {{ .Chart.Name }}
 spec:
   selector:
-    app: {{ include "flask-crud-api.name" . }}
+    app: {{ .Chart.Name }}
   ports:
     - protocol: TCP
       port: 80
