@@ -1,52 +1,44 @@
-from flask import Flask, request
-from flask_restful import Resource, Api
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
-api = Api(app)
 
-# Sample data for books (replace this with a database in a real-world scenario)
-books = [
-    {"id": 1, "title": "Book 1", "author": "Author 1"},
-    {"id": 2, "title": "Book 2", "author": "Author 2"},
-    # Add more books as needed
+# Sample data for demonstration (replace this with your data storage or database)
+data = [
+    {"id": 1, "name": "Item 1"},
+    {"id": 2, "name": "Item 2"},
+    {"id": 3, "name": "Item 3"}
 ]
 
-class BookResource(Resource):
-    def get(self, book_id):
-        book = next((b for b in books if b["id"] == book_id), None)
-        return book if book else {"message": "Book not found"}, 404
+@app.route('/items', methods=['POST'])
+def create_item():
+    new_item = {"id": len(data) + 1, "name": request.json['name']}
+    data.append(new_item)
+    return jsonify(new_item), 201
 
-    def put(self, book_id):
-        book = next((b for b in books if b["id"] == book_id), None)
-        if book:
-            data = request.get_json()
-            book["title"] = data.get("title", book["title"])
-            book["author"] = data.get("author", book["author"])
-            return book, 200
-        else:
-            return {"message": "Book not found"}, 404
+@app.route('/items', methods=['GET'])
+def get_items():
+    return jsonify(data), 200
 
-    def delete(self, book_id):
-        global books
-        books = [b for b in books if b["id"] != book_id]
-        return {"message": "Book deleted successfully"}, 200
+@app.route('/items/<int:item_id>', methods=['GET'])
+def get_item(item_id):
+    item = next((item for item in data if item['id'] == item_id), None)
+    if item:
+        return jsonify(item), 200
+    return jsonify({"message": "Item not found"}), 404
 
-class BookListResource(Resource):
-    def get(self):
-        return books, 200
+@app.route('/items/<int:item_id>', methods=['PUT'])
+def update_item(item_id):
+    item = next((item for item in data if item['id'] == item_id), None)
+    if item:
+        item['name'] = request.json['name']
+        return jsonify(item), 200
+    return jsonify({"message": "Item not found"}), 404
 
-    def post(self):
-        data = request.get_json()
-        if not data.get("title") or not data.get("author"):
-            return {"message": "Title and Author are required fields"}, 400
-
-        book_id = len(books) + 1
-        new_book = {"id": book_id, "title": data["title"], "author": data["author"]}
-        books.append(new_book)
-        return new_book, 201
-
-api.add_resource(BookListResource, '/')
-api.add_resource(BookResource, '/books/<int:book_id>')
+@app.route('/items/<int:item_id>', methods=['DELETE'])
+def delete_item(item_id):
+    global data
+    data = [item for item in data if item['id'] != item_id]
+    return jsonify({"message": "Item deleted successfully"}), 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
