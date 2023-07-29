@@ -5,6 +5,15 @@ on:
     branches:
       - main
 
+env:
+  ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
+  ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
+  ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
+  ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
+  aks_client_id: ${{secrets.AKS_CLIENT_ID}}
+  aks_client_secret: ${{secrets.AKS_CLIENT_SECRET}}
+  
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -45,35 +54,16 @@ jobs:
         working-directory: "${{ github.workspace }}/aks-terraform"
         run: |
           terraform init
-        env:
-          ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
-          ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
-          ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
-          ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
 
       - name: Terraform plan
         working-directory: "${{ github.workspace }}/aks-terraform"
         run: |
           terraform plan -input=false -var service_principle_client_id=$aks_client_id -var service_principle_client_secret=$aks_client_secret
-        env:
-          ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
-          ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
-          ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
-          ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
-          aks_client_id: ${{secrets.AKS_CLIENT_ID}}
-          aks_client_secret: ${{secrets.AKS_CLIENT_SECRET}}
 
       - name: Terraform Apply
         working-directory: "${{ github.workspace }}/aks-terraform"
         run: |
            terraform apply -auto-approve -input=false -var service_principle_client_id=$aks_client_id -var service_principle_client_secret=$aks_client_secret
-        env:
-            ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
-            ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
-            ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
-            ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
-            aks_client_id: ${{secrets.AKS_CLIENT_ID}}
-            aks_client_secret: ${{secrets.AKS_CLIENT_SECRET}}
       
       - name: Azure AKS Set Context
         uses: azure/aks-set-context@v1
