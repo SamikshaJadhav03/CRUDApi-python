@@ -16,6 +16,12 @@ variable "dns_prefix_name" {
   description = "DNS prefix specified when creating the managed cluster."
 }
 
+variable "kubernetes_version" {
+  type        = string
+  default     = "1.26.0"
+  description = "Kubernetes version"
+}
+
 variable "node_pool_name" {
   type        = string
   default     = "default"
