@@ -89,4 +89,4 @@ jobs:
         working-directory: "${{ github.workspace }}/helm"
         run: |
           az aks get-credentials --resource-group api-demo --name my-aks-cluster
-          kubectl apply -f templates/deployment.yaml
+          kubectl apply -f templates/deployment.yaml --dry-run
